@@ -74,3 +74,43 @@ header {
     color: white;
     text-align: center;
 }
+
+.purple {
+    background-color: plum;
+    width: 6%;
+    padding: 2px;
+    padding-left: 10px;
+    color: white;
+}
+
+.red {
+    background-color: red;
+    width: 6%;
+    padding: 2px;
+    padding-left: 10px;
+    color: white;
+}
+
+.orange {
+    background-color: orange;
+    width: 6%;
+    padding: 2px;
+    padding-left: 10px;
+    color: black;
+}
+
+.yellow {
+    background-color: yellow;
+    width: 6%;
+    padding: 2px;
+    padding-left: 10px;
+    color: black;
+}
+
+.green {
+    background-color: green;
+    width: 6%;
+    padding: 2px;
+    padding-left: 10px;
+    color: white;
+}

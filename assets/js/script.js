@@ -50,7 +50,24 @@ var currentWeather = function() {
     var windSpeed = document.createElement("p");
     windSpeed.textContent = "Wind Speed: " + foreCast.current.wind_speed + " MPH";
     var uvi = document.createElement("p");
-    uvi.textContent = "UV Index: " + foreCast.current.uvi;
+    uvi.classList.add("row");
+    var uviColor = document.createElement("p")
+    var uviGet = foreCast.current.uvi;
+    uviColor.textContent = uviGet;
+    uvi.textContent = "UV Index: ";
+    uvi.appendChild(uviColor);
+    if (foreCast.current.uvi >= 11) {
+        uviColor.classList.add("purple");
+    } else if (foreCast.current.uvi >= 8) {
+        uviColor.classList.add("red");
+    } else if (foreCast.current.uvi >= 6) {
+        uviColor.classList.add("orange");
+    } else if (foreCast.current.uvi >= 3) {
+        uviColor.classList.add("yellow");
+    } else if (foreCast.current.uvi >= 0) {
+        uviColor.classList.add("green");
+    }
+
     currentWeatherEl.append(currentDateText, temp, humidity, windSpeed, uvi);
 }
 
