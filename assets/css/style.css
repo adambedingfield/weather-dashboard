@@ -26,6 +26,14 @@ header {
     margin-bottom: 3px;
 }
 
+.clear-btn {
+    background-color: red;
+    color: black;
+    padding: 10px;
+    padding-bottom: 30px;
+    margin-bottom: 5px;
+}
+
 .search-style {
     width: 80%;
     margin-left: 10%;

@@ -9,11 +9,13 @@ var day3El = document.querySelector("#day3");
 var day4El = document.querySelector("#day4");
 var day5El = document.querySelector("#day5");
 var day6El = document.querySelector("#day6");
-cityArray = [];
-cityArrayIndex = 0;
+let searchHistory = JSON.parse(localStorage.getItem("history")) || [];
+idCounter = 0;
 
 var convertCity = function() {
-    var geoCodeUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + city.value + "&limit=5&appid=eab2fd8e6f53d96f9a1409a1d512d8ce";
+    searchHistory.push(city.value)
+    localStorage.setItem("history",JSON.stringify(searchHistory));
+    var geoCodeUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + city.value + "&limit=5&appid=2981de0eb91d23b84c577afb5ed8da9e";
     fetch(geoCodeUrl)
     .then (function(response) {
         // request was successful
@@ -22,7 +24,7 @@ var convertCity = function() {
                 var cityLat = data[0].lat;
                 var cityLon = data[0].lon;
                 cityName = data[0].name;
-                var weatherInfoUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + cityLat + "&lon=" + cityLon + "&units=imperial&exclude=minutely,hourly,alerts&appid=eab2fd8e6f53d96f9a1409a1d512d8ce";
+                var weatherInfoUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + cityLat + "&lon=" + cityLon + "&units=imperial&exclude=minutely,hourly,alerts&appid=2981de0eb91d23b84c577afb5ed8da9e";
                 fetch(weatherInfoUrl)
                 .then (function(weather) {
                     weather.json().then(function(weatherData) {
@@ -31,7 +33,7 @@ var convertCity = function() {
                         displayIcon = "http://openweathermap.org/img/wn/" + currentIcon + "@2x.png"
                         currentWeather();
                         fiveDayForecast();
-                        saveSearch();
+                        location.reload();
                     });
                 })
             });
@@ -153,22 +155,21 @@ var fiveDayForecast = function() {
 
 
 var saveSearch = function() {
-    var citySave = document.createElement("button");
-    citySave.classList.add("city-holder");
-    citySave.setAttribute("id","citySave");
-    citySave.innerHTML = city.value;
-    searchEl.append(citySave);
-    cityArray.push(citySave.innerHTML);
-    console.log(cityArray);
-    var buttonCity = function() {
-        city.value = citySave.innerHTML;
-        savedCitySearch();
+    for (let i=0; i<searchHistory.length; i++) {
+        citySave = document.createElement("button");
+        citySave.classList.add("city-holder");
+        citySave.innerHTML = searchHistory[i];
+        searchEl.append(citySave);
+        var buttonCity = function() {
+            city.value = searchHistory[i];
+            savedCitySearch();
+        }
+        citySave.addEventListener("click", buttonCity);
     }
-    citySave.addEventListener("click", buttonCity);
 }
 
 var savedCitySearch = function() {
-    var geoCodeUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + city.value + "&limit=5&appid=eab2fd8e6f53d96f9a1409a1d512d8ce";
+    var geoCodeUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + city.value + "&limit=5&appid=2981de0eb91d23b84c577afb5ed8da9e";
     fetch(geoCodeUrl)
     .then (function(response) {
         // request was successful
@@ -177,7 +178,7 @@ var savedCitySearch = function() {
                 var cityLat = data[0].lat;
                 var cityLon = data[0].lon;
                 cityName = data[0].name;
-                var weatherInfoUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + cityLat + "&lon=" + cityLon + "&units=imperial&exclude=minutely,hourly,alerts&appid=eab2fd8e6f53d96f9a1409a1d512d8ce";
+                var weatherInfoUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + cityLat + "&lon=" + cityLon + "&units=imperial&exclude=minutely,hourly,alerts&appid=2981de0eb91d23b84c577afb5ed8da9e";
                 fetch(weatherInfoUrl)
                 .then (function(weather) {
                     weather.json().then(function(weatherData) {
@@ -194,6 +195,19 @@ var savedCitySearch = function() {
     
 };
 
+var loadLast = function() {
+    city.value = searchHistory.slice(-1);
+    savedCitySearch();
+}
+saveSearch();
+loadLast();
+
+var clearButton = document.querySelector("#clear")
+var clearData = function() {
+    localStorage.clear();
+    location.reload();
+}
+clearButton.addEventListener("click", clearData);
 
 
 var searchCity = document.querySelector("#search");
