@@ -21,7 +21,7 @@ Current Weather displays temperature, humidity, wind speed, and the UV which is 
 5 Day forecast plans out the upcoming weather with information on the temperature and humidity.
 ![5dayforecast](assets/images/5dayweather.png)
 
-The left side holds where the user can input a city to be displayed. Searched cities are the displayed under the clear cities button. Clicking the clear cities button will clear the local storage of the user and any cities displayed below.
+The left side holds where the user can input a city to be displayed. Searched cities are then displayed under the clear cities button. Clicking the clear cities button will clear the local storage of the user and any cities displayed below.
 ![Search](assets/images/searchside.png)
 
 
