@@ -11,16 +11,19 @@
 </head>
 <body>
     <header>Weather Dashboard</header>
+    <!-- Search City Side-->
     <div class="row">
         <div class="col-4 search-side" id="search-col">
             <p>Search for a city:</p>
             <input type="text" name="cityinput" id="cityinput" class="search-style"><button type="submit" class="btn" id="search">&#128269;</button>
             <button id="clear" class="clear-btn search-style">Clear Cities</button>
         </div>
+        <!-- Weather Data Side -->
         <div class="col-8 weather-side">
             <h1 class="weather-placeholder" id="weather-placeholder">Data will be shown when a city is searched.</h1>
             <div class="current-date col hide" id="current-weather"></div>
             <div class="future-weather hide" id="SmalldayForecast">
+                <!-- Five Day -->
                 <h3>5 Day Forecast:</h3>
                 <div class="row">
                     <section class="forecast col-2" id="day2"></section class="forecast col-2">

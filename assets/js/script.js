@@ -1,3 +1,4 @@
+// global variables
 var city = document.querySelector("#cityinput");
 var searchedCity = document.querySelector("#savedcityinput");
 var currentWeatherEl = document.querySelector("#current-weather");
@@ -9,13 +10,14 @@ var day3El = document.querySelector("#day3");
 var day4El = document.querySelector("#day4");
 var day5El = document.querySelector("#day5");
 var day6El = document.querySelector("#day6");
+//save cities array
 let searchHistory = JSON.parse(localStorage.getItem("history")) || [];
-idCounter = 0;
 
+// function that takes a city name, then pulls its lat and lon to produce weather results
 var convertCity = function() {
     searchHistory.push(city.value)
     localStorage.setItem("history",JSON.stringify(searchHistory));
-    var geoCodeUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + city.value + "&limit=5&appid=2981de0eb91d23b84c577afb5ed8da9e";
+    var geoCodeUrl = "https://api.openweathermap.org/geo/1.0/direct?q=" + city.value + "&limit=5&appid=2981de0eb91d23b84c577afb5ed8da9e";
     fetch(geoCodeUrl)
     .then (function(response) {
         // request was successful
@@ -30,7 +32,7 @@ var convertCity = function() {
                     weather.json().then(function(weatherData) {
                         foreCast = weatherData;
                         currentIcon = weatherData.current.weather[0].icon;
-                        displayIcon = "http://openweathermap.org/img/wn/" + currentIcon + "@2x.png"
+                        displayIcon = "https://openweathermap.org/img/wn/" + currentIcon + "@2x.png"
                         currentWeather();
                         fiveDayForecast();
                         location.reload();
@@ -42,7 +44,7 @@ var convertCity = function() {
     
 };
 
-
+//writes the weather data for the current day
 var currentWeather = function() {
     currentWeatherEl.innerHTML = '';
     var currentDateText = document.createElement("h1")
@@ -84,6 +86,7 @@ var currentWeather = function() {
     
 }
 
+// writes the weather for each day in the 5 day forecast
 var fiveDayForecast = function() {
     var today = new Date();
     // day 2
@@ -93,7 +96,7 @@ var fiveDayForecast = function() {
     day2Text.textContent = day2Date;
     var day2Icon = document.createElement("img");
     day2IconGet = foreCast.daily[1].weather[0].icon;
-    day2Icon.src = "http://openweathermap.org/img/wn/" + day2IconGet + "@2x.png"
+    day2Icon.src = "https://openweathermap.org/img/wn/" + day2IconGet + "@2x.png"
     var day2Temp = document.createElement("p");
     day2Temp.textContent = "Temp: " + foreCast.daily[1].temp.day + " F";
     var day2Humidity = document.createElement("p");
@@ -106,7 +109,7 @@ var fiveDayForecast = function() {
     day3Text.textContent = day3Date;
     var day3Icon = document.createElement("img");
     day3IconGet = foreCast.daily[2].weather[0].icon;
-    day3Icon.src = "http://openweathermap.org/img/wn/" + day3IconGet + "@2x.png"
+    day3Icon.src = "https://openweathermap.org/img/wn/" + day3IconGet + "@2x.png"
     var day3Temp = document.createElement("p");
     day3Temp.textContent = "Temp: " + foreCast.daily[2].temp.day + " F";
     var day3Humidity = document.createElement("p");
@@ -119,7 +122,7 @@ var fiveDayForecast = function() {
     day4Text.textContent = day4Date;
     var day4Icon = document.createElement("img");
     day4IconGet = foreCast.daily[3].weather[0].icon;
-    day4Icon.src = "http://openweathermap.org/img/wn/" + day4IconGet + "@2x.png"
+    day4Icon.src = "https://openweathermap.org/img/wn/" + day4IconGet + "@2x.png"
     var day4Temp = document.createElement("p");
     day4Temp.textContent = "Temp: " + foreCast.daily[3].temp.day + " F";
     var day4Humidity = document.createElement("p");
@@ -132,7 +135,7 @@ var fiveDayForecast = function() {
     day5Text.textContent = day5Date;
     var day5Icon = document.createElement("img");
     day5IconGet = foreCast.daily[4].weather[0].icon;
-    day5Icon.src = "http://openweathermap.org/img/wn/" + day5IconGet + "@2x.png"
+    day5Icon.src = "https://openweathermap.org/img/wn/" + day5IconGet + "@2x.png"
     var day5Temp = document.createElement("p");
     day5Temp.textContent = "Temp: " + foreCast.daily[4].temp.day + " F";
     var day5Humidity = document.createElement("p");
@@ -145,7 +148,7 @@ var fiveDayForecast = function() {
     day6Text.textContent = day6Date;
     var day6Icon = document.createElement("img");
     day6IconGet = foreCast.daily[5].weather[0].icon;
-    day6Icon.src = "http://openweathermap.org/img/wn/" + day6IconGet + "@2x.png"
+    day6Icon.src = "https://openweathermap.org/img/wn/" + day6IconGet + "@2x.png"
     var day6Temp = document.createElement("p");
     day6Temp.textContent = "Temp: " + foreCast.daily[5].temp.day + " F";
     var day6Humidity = document.createElement("p");
@@ -153,7 +156,7 @@ var fiveDayForecast = function() {
     day6El.append(day6Text, day6Icon, day6Temp, day6Humidity);
 }
 
-
+// loops through saved array then display the cities searched and creates DOM elements
 var saveSearch = function() {
     for (let i=0; i<searchHistory.length; i++) {
         citySave = document.createElement("button");
@@ -168,8 +171,9 @@ var saveSearch = function() {
     }
 }
 
+// pulls value from the saved cities then produces the weather for them
 var savedCitySearch = function() {
-    var geoCodeUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + city.value + "&limit=5&appid=2981de0eb91d23b84c577afb5ed8da9e";
+    var geoCodeUrl = "https://api.openweathermap.org/geo/1.0/direct?q=" + city.value + "&limit=5&appid=2981de0eb91d23b84c577afb5ed8da9e";
     fetch(geoCodeUrl)
     .then (function(response) {
         // request was successful
@@ -184,7 +188,7 @@ var savedCitySearch = function() {
                     weather.json().then(function(weatherData) {
                         foreCast = weatherData;
                         currentIcon = weatherData.current.weather[0].icon;
-                        displayIcon = "http://openweathermap.org/img/wn/" + currentIcon + "@2x.png"
+                        displayIcon = "https://openweathermap.org/img/wn/" + currentIcon + "@2x.png"
                         currentWeather();
                         fiveDayForecast();
                     });
@@ -194,7 +198,7 @@ var savedCitySearch = function() {
     })
     
 };
-
+// loads the last city the user input
 var loadLast = function() {
     city.value = searchHistory.slice(-1);
     savedCitySearch();
@@ -202,6 +206,7 @@ var loadLast = function() {
 saveSearch();
 loadLast();
 
+// clears the users local storage and city search
 var clearButton = document.querySelector("#clear")
 var clearData = function() {
     localStorage.clear();
@@ -209,6 +214,6 @@ var clearData = function() {
 }
 clearButton.addEventListener("click", clearData);
 
-
+// searches the user input on button click
 var searchCity = document.querySelector("#search");
 searchCity.addEventListener("click", convertCity);
