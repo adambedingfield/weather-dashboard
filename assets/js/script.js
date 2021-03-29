@@ -16,7 +16,6 @@ let searchHistory = JSON.parse(localStorage.getItem("history")) || [];
 // function that takes a city name, then pulls its lat and lon to produce weather results
 var convertCity = function() {
     searchHistory.push(city.value)
-    localStorage.setItem("history",JSON.stringify(searchHistory));
     var geoCodeUrl = "https://api.openweathermap.org/geo/1.0/direct?q=" + city.value + "&limit=5&appid=2981de0eb91d23b84c577afb5ed8da9e";
     fetch(geoCodeUrl)
     .then (function(response) {
@@ -35,11 +34,12 @@ var convertCity = function() {
                         displayIcon = "https://openweathermap.org/img/wn/" + currentIcon + "@2x.png"
                         currentWeather();
                         fiveDayForecast();
+                        localStorage.setItem("history",JSON.stringify(searchHistory));
                         location.reload();
                     });
                 })
             });
-        } 
+        }
     })
     
 };
